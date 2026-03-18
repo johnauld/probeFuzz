@@ -47,8 +47,10 @@ Input is read from **stdin**, one probe per line, in comma-separated format:
 Results are written to **stdout**.
 
 ```bash
-./probeFuzz < sample_data/probe3.txt
+./probeFuzz [maxD] < sample_data/probe3.txt
 ```
+
+maxD is the optional Hamming threshold to report. The default is 10; going much above 30 can lead to performance issues.
 
 ---
 

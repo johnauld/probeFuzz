@@ -19,7 +19,6 @@ namespace {
 constexpr size_t	KMER_LEN	{50};
 constexpr size_t	LO_BASES	{32};					// fits in one uint64_t
 constexpr size_t	HI_BASES	{KMER_LEN - LO_BASES};	// 18
-constexpr int		MAXD		{10};
 
 // Encode A,C,G,T into 2 bits.
 inline uint64_t enc(char c) {
@@ -93,13 +92,16 @@ inline int hamming(const Packed &a, const Packed &b) {
 
 } // anonymous namespace
 
-int main() {
+int main(int argc, char* argv[]) {
 	std::ios::sync_with_stdio(false);
 	std::cin.tie(nullptr);
 
 	std::vector<std::string>	id;
 	std::vector<Packed>			seq;
 	std::string					line;
+
+	// This will fail gracelessly if argv[1] is not a number
+	const int					maxD {argc > 1 ? std::stoi(argv[1]) : 10};
 
 	while ( std::cin >> line ) {					// Read until EOF
 		auto comma_pos {line.find(',')};
@@ -121,7 +123,7 @@ int main() {
 		#pragma omp for schedule(dynamic, 64)
 		for ( size_t i = 0; i < num_probes; ++i )
 			for ( size_t j = i+1; j < num_probes; ++j )
-				if ( auto d = hamming(seq[i], seq[j]); d <= MAXD )
+				if ( auto d = hamming(seq[i], seq[j]); d <= maxD )
 					out << d << ',' << id[i] << ',' << id[j] << ','
 						<< unpack50(seq[i]) << ',' << unpack50(seq[j]) << '\n';
 
