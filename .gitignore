@@ -1,0 +1,11 @@
+# Build artifacts
+probeFuzz
+probeFuzz_debug
+
+# Editor
+*.swp
+*.swo
+*~
+
+# macOS
+.DS_Store
