@@ -1,3 +1,4 @@
+![Build](https://github.com/johnauld/probeFuzz/actions/workflows/c-cpp.yml/badge.svg)
 # probeFuzz
 
 Finds all pairs of DNA probes within a given [Hamming distance](https://en.wikipedia.org/wiki/Hamming_distance) of each other.
