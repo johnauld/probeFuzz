@@ -1,0 +1,19 @@
+name: Build
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install dependencies
+      run: sudo apt-get install -y g++ libomp-dev
+    - name: Build
+      run: make
+    - name: Smoke test
+      run: ./probeFuzz 10 < sample_data/probe3.txt | wc -l
