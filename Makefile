@@ -1,12 +1,11 @@
 CXX      := g++
-CXXFLAGS := --std=c++23 -Wall -Wextra
-LDFLAGS  := -fopenmp
+CXXFLAGS := --std=c++23 -Wall -Wextra -fopenmp
 
 TARGET   := probeFuzz
 SRC      := probeFuzz.cpp
 
 # Release (default)
-RELEASE_FLAGS := -O3 -march=native -fopenmp
+RELEASE_FLAGS := -O3 -march=native
 
 .PHONY: all
 all: $(TARGET)
