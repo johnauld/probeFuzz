@@ -40,7 +40,7 @@ struct Packed {
 [[nodiscard]]
 inline Packed pack50(std::string_view s) {
 	if (s.size() < KMER_LEN)
-		throw std::domain_error("Expected 50-mer, got: " + std::string{s});
+		throw std::domain_error("Invalid sequence");
 
 	Packed p {0, 0};
 
@@ -109,7 +109,12 @@ int main(int argc, char* argv[]) {
 		if ( comma_pos == std::string::npos ) continue;	// Skip malformed lines
 
 		id.push_back(line.substr(0, comma_pos));
-		seq.push_back(pack50(line.substr(comma_pos + 1)));
+		try {
+			seq.push_back(pack50(line.substr(comma_pos + 1)));
+		} catch ( const std::exception& e ) {
+			std::cerr << e.what() << ":\n" << line << std::endl;
+			continue;
+		}
 	}
 
 	const auto	num_probes	{seq.size()};
